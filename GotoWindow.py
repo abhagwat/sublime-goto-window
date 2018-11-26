@@ -89,7 +89,7 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         elif 'folder' in window_variables:
             window_title = window_variables['folder']
 
-        shell_command = "wmctrl -i -a $(wmctrl -l | grep '%s' | cut -d ' ' -f 1"
+        shell_command = "wmctrl -i -a $(wmctrl -l | grep '%s' | cut -d ' ' -f 1)"
         try:
             Popen(shell_command % window_title, shell=True,
                   stdout=PIPE, stderr=PIPE)
