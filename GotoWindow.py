@@ -9,9 +9,10 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         folders = self._get_folders()
 
         folders_alone = [x for (x, y) in folders]
-        folders_for_list = []
-        for folder in folders_alone:
-            folders_for_list.append([os.path.basename(folder), folder])
+        # folders_for_list = []
+        # for folder in folders_alone:
+        #     folders_for_list.append([os.path.basename(folder), folder])
+        folders_for_list = folders_alone
 
         self.window.show_quick_panel(folders_for_list, self.on_done, 0)
 
@@ -86,16 +87,16 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         if 'project_base_name' in window_variables:
             window_title = window_variables['project_base_name']
         elif 'folder' in window_variables:
-            window_title = os.path.basename(window_variables['folder'])
+            window_title = window_variables['folder']
 
+        shell_command = "wmctrl -i -a $(wmctrl -l | grep '%s' | cut -d ' ' -f 1"
         try:
-            Popen(["wmctrl", "-a", window_title + ") - Sublime Text"],
-                    stdout=PIPE, stderr=PIPE)
+            Popen(shell_command % window_title, shell=True,
+                  stdout=PIPE, stderr=PIPE)
         except FileNotFoundError:
             msg = "`wmctrl` is required by GotoWindow but was not found on " \
                   "your system. Please install it and try again."
             sublime.error_message(msg)
-
 
     def _get_current_index(self):
         active_window = sublime.active_window()
