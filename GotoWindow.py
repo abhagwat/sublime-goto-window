@@ -151,6 +151,6 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         for i, window in enumerate(sublime.windows()):
             display_name = self._get_display_name(window)
             if display_name is not None:
-                folders.append((self._smart_path(display_name), i))
+                folders.append((display_name, i))
 
         return sorted(folders)
