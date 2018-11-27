@@ -121,7 +121,7 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         active_view = window.active_view()
 
         # First, try to use the active_view
-        if len(folders_in_window) == 0 and active_view is not None:
+        if active_view is not None:
             view_path = active_view.file_name()
             if view_path:
                 return view_path
