@@ -117,8 +117,8 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
         return name
 
     def _get_display_name(self, window):
-        # If we have a sublime-project file in the window then use that to
-        # represent the window
+        folders_in_window = window.folders()
+        active_view = window.active_view()
 
         # First, try to use the active_view
         if len(folders_in_window) == 0 and active_view is not None:
@@ -130,15 +130,15 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
             if view_name:
                 return view_name
 
+        # If we have a sublime-project file in the window then use that to
+        # represent the window
+
         # Sublime Text 2 does not have this method
         if hasattr(window, 'project_file_name'):
             project_file_name = window.project_file_name()
             if project_file_name is not None:
                 project_file_name = project_file_name.replace('.sublime-project', '')
                 return project_file_name
-
-        folders_in_window = window.folders()
-        active_view = window.active_view()
 
       # Otherwise use the first folder we find
         for folder in window.folders():
