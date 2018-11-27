@@ -84,7 +84,9 @@ class GotoWindowCommand(sublime_plugin.WindowCommand):
     def _linux_focus(self, window_to_move_to):
         window_variables = window_to_move_to.extract_variables()
 
-        if 'project_base_name' in window_variables:
+        if 'file' in window_variables:
+            window_title = window_variables['file']
+        elif 'project_base_name' in window_variables:
             window_title = window_variables['project_base_name']
         elif 'folder' in window_variables:
             window_title = window_variables['folder']
